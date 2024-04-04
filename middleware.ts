@@ -12,7 +12,7 @@ export default authMiddleware({
         'api/uploadthing',
         '/assets/images/logo.svg',
         '/favicon.ico',
-        '/hero.png'
+        '/assets/images/hero.png'
     ]
 });
 
