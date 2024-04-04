@@ -5,7 +5,7 @@ export const headerLinks = [
   },
   {
     label: 'Add Program',
-    route: '/programs/add',
+    route: '/programs/create',
   },
   {
     label: 'My Profile',

@@ -1,0 +1,78 @@
+'use client'
+
+import {zodResolver} from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { programFormSchema } from "@/lib/validator"
+import { z } from "zod"
+import { programDefaultValues } from "@/constants"
+import Dropdown from "./Dropdown"
+
+
+
+type ProgramFormProps = {
+    userId: string,
+    type: "Create" | "Update"
+}
+
+const ProgramForm = ({ userId, type }: ProgramFormProps) => {
+
+    const initialValues = programDefaultValues;
+
+    const form = useForm<z.infer<typeof programFormSchema>>({
+    resolver: zodResolver(programFormSchema),
+    defaultValues: initialValues
+  })
+ 
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof programFormSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
+  return (
+      <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 md:flex-row">
+                <FormField
+                control={form.control}
+                name="programName"
+                render={({ field }) => (
+                    <FormItem className="w-full">
+                    <FormControl>
+                        <Input placeholder="Program Name" {...field} className="input-field"/>
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
+                <FormField
+                control={form.control}
+                name="universityId"
+                render={({ field }) => (
+                    <FormItem className="w-full">
+                    <FormControl>
+                        <Dropdown onChangeHandler = {field.onChange} value = {field.value} />
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
+              </div>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+
+export default ProgramForm
