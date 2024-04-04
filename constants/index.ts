@@ -13,15 +13,17 @@ export const headerLinks = [
   },
 ]
 
-export const eventDefaultValues = {
-  title: '',
-  description: '',
-  location: '',
-  imageUrl: '',
-  startDateTime: new Date(),
-  endDateTime: new Date(),
-  categoryId: '',
-  price: '',
-  isFree: false,
-  url: '',
+export const programDefaultValues = {
+  university: '',
+  place: '',
+  programName: '',
+  degreeType: '',
+  faculty: '',
+  programDescription: '',
+  courseRequirements: '',
+  admissionRequirements: '',
+  tuitionFeesDomestic: '',
+  duration: '',
+  deliveryMode: '',
+  'Co-op/Internship': '',
 }

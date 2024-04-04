@@ -11,7 +11,8 @@ export default authMiddleware({
         '/api/webhook/clerk',
         'api/uploadthing',
         '/assets/images/logo.svg',
-        '/favicon.ico'
+        '/favicon.ico',
+        '/hero.png'
     ]
 });
 
