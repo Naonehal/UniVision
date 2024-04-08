@@ -19,4 +19,4 @@ const CompareProgram = () => {
   )
 }
 
-export default CreateProgram
+export default CompareProgram
