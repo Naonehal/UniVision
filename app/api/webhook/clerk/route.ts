@@ -104,13 +104,3 @@ export async function POST(req: Request) {
   return new Response('', { status: 200 })
 
 }
-
-export const isAdmin = (email: string | undefined): boolean => {
-  if (!email) return false;
-
-  const adminEmails = process.env.ADMIN_EMAILS
-    ? process.env.ADMIN_EMAILS.split(",").map(e => e.trim().toLowerCase())
-    : [];
-
-  return adminEmails.includes(email.trim().toLowerCase());
-};
