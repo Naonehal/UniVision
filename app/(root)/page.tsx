@@ -8,9 +8,6 @@ import Link from "next/link";
 export default async function Home() {
   
   const programs = await getAllPrograms({
-    query: '',
-    university: '',
-    page: 1,
     limit: 6
   });
 
