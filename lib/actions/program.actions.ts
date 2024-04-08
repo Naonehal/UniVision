@@ -62,7 +62,7 @@ export const deleteProgram = async ({programId}: DeleteProgramParams) => {
     }
 }
 
-export const getAllPrograms = async ({query, limit = 8, page, university: GetAllProgramsParams}) => {
+export const getAllPrograms = async ({ limit = 8 }) => {
     try {
         await connectToDatabase();
 
