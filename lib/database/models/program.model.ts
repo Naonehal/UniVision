@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-export interface IEvent extends Document {
+export interface IProgram extends Document {
     _id: string;
     university: { _id: string, name: string }; // Assuming 'University' is a model and its type is string
     place: string;
@@ -14,6 +14,8 @@ export interface IEvent extends Document {
     duration: string;
     deliveryMode?: string; // Optional field
     'Co-op/Internship'?: string; // Optional field with a special character in the field name
+    imageUrl: string;
+    admin: { _id: string, firstName: string, lastName: string }
 }
 
 const ProgramSchema = new Schema({
@@ -27,8 +29,10 @@ const ProgramSchema = new Schema({
     admissionRequirements: {type: String},
     tuitionFeesDomestic: {type: String, required: true},
     duration: {type: String, required: true},
+    imageUrl: {type: String, required: true},
     deliveryMode: {type: String},
-    'Co-op/Internship': {type: String},
+    'Co-op/Internship': { type: String },
+    admin: { type: Schema.Types.ObjectId, ref: 'User' },
 })
 
 const Program = models.Program || model('Program', ProgramSchema);

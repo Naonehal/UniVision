@@ -1,8 +1,20 @@
+
+import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
+import { getAllPrograms } from "@/lib/actions/program.actions";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  
+  const programs = await getAllPrograms({
+    query: '',
+    university: '',
+    page: 1,
+    limit: 6
+  });
+
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-patter bg-contain py-5 md:py-10">
@@ -34,7 +46,17 @@ export default function Home() {
           search
           location
         </div>
+        <Collection
+          data={programs?.data}
+          emptyTitle ="No Programs Found"
+          emptyStateSubtext="Come Back Later"
+          collectionType="All_Programs"
+          limit={8}
+          page={1}
+        totalPages={2}  
+        />
       </section>
     </>
   );
 }
+

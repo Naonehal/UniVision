@@ -18,6 +18,8 @@ export type UpdateUserParams = {
 
 // ====== PROGRAM PARAMS
 export type CreateProgramParams = {
+  userId: string
+  program: {
     universityId: string;
     place: string;
     programName: string;
@@ -29,23 +31,29 @@ export type CreateProgramParams = {
     tuitionFeesDomestic: string;
     duration: string;
     deliveryMode?: string;
-    coOpInternship?: string;
+  'Co-op/Internship'?: string;
+  imageUrl: string;
+  }
 };
 
 export type UpdateProgramParams = {
-    programId: string;
-    universityId?: string;
-    place?: string;
-    programName?: string;
-    degreeType?: string;
-    faculty?: string;
-    programDescription?: string;
+  userId: string
+  program: {
+    _id: string;
+    universityId: string;
+    place: string;
+    programName: string;
+    degreeType: string;
+    faculty: string;
+    programDescription: string;
     courseRequirements?: string;
     admissionRequirements?: string;
-    tuitionFeesDomestic?: string;
-    duration?: string;
+    tuitionFeesDomestic: string;
+    duration: string;
     deliveryMode?: string;
-    coOpInternship?: string;
+  'Co-op/Internship'?: string;
+  imageUrl: string;
+  }
 };
 
 export type DeleteProgramParams = {
@@ -87,7 +95,8 @@ export type Program = {
     tuitionFeesDomestic: string;
     duration: string;
     deliveryMode?: string;
-    coOpInternship?: string;
+  'Co-op/Internship'?: string;
+  imageUrl: string;
 };
 
 

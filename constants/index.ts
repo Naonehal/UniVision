@@ -1,20 +1,20 @@
 export const headerLinks = [
-  {
-    label: 'Home',
-    route: '/',
-  },
-  {
-    label: 'Add Program',
-    route: '/programs/create',
-  },
-  {
-    label: 'My Profile',
-    route: '/profile',
-  },
+  { label: 'Home', route: '/' },
+  { label: 'Compare Program', route: '/programs/compare' },
+  { label: 'My Profile', route: '/profile' },
 ]
 
+export const adminLinks = [
+  { label: 'Add Program', route: '/programs/create' },
+]
+export const defaultLinks = [
+  { label: '', route: '/' },
+]
+
+
+
 export const programDefaultValues = {
-  university: '',
+  universityId: '',
   place: '',
   programName: '',
   degreeType: '',
@@ -26,4 +26,6 @@ export const programDefaultValues = {
   duration: '',
   deliveryMode: '',
   'Co-op/Internship': '',
+  imageUrl:'',
 }
+

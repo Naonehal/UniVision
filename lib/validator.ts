@@ -13,5 +13,6 @@ export const programFormSchema = z.object({
     deliveryMode: z.string(),
     'Co-op/Internship': z.string(),
     universityId: z.string(),
+    imageUrl: z.string(),
 })
 
