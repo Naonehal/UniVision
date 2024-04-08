@@ -91,10 +91,6 @@ const ProgramForm = ({ type, userId, program, programId }: ProgramFormProps) => 
                   
               })
 
-              if (updatedProgram) {
-                  form.reset();
-                  router.push(`/programs/${updatedProgram._id}`)
-              }
           } catch (error) {
               console.log(error);
           }
