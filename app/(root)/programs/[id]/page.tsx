@@ -1,12 +1,21 @@
-import { getProgramById } from '@/lib/actions/program.actions'
+import Collection from '@/components/shared/Collection';
+import SaveProgramButton from '@/components/shared/SaveProgramButton';
+import { getProgramById, getRelatedProgramsByUniversity } from '@/lib/actions/program.actions'
 import { SearchParamProps } from '@/types'
 import Image from 'next/image';
 import React from 'react'
 
-const ProgramDetails = async ({ params: { id } }: SearchParamProps) => {
+const ProgramDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
     const program = await getProgramById(id);
-    console.log(program)
-  return (
+    
+    const relatedPrograms = await getRelatedProgramsByUniversity({
+        programName: program.programName,
+        programId: program._id,
+        page: searchParams.page as string,
+    })
+    // console.log(relatedPrograms)
+    return (
+      <>
       <section className='flex justify-center bg-primary-50 bg-dotted-pattern bg-contain'>
           <div className='grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl'>
               <Image
@@ -55,7 +64,8 @@ const ProgramDetails = async ({ params: { id } }: SearchParamProps) => {
                               </span>
                           </p>
                       </div>
-                  </div>
+                        </div>
+                    <SaveProgramButton program = {program}/>
                   <div className='flex flex-col gap-5'>
                       <div className='p-regular-20 flex items-center gap-3'>
                           <Image src="/assets/icons/location.svg" alt="location" width={32} height={32} />
@@ -90,7 +100,23 @@ const ProgramDetails = async ({ params: { id } }: SearchParamProps) => {
                   </div>
               </div>
           </div>
-    </section>
+            </section>
+            
+      <section className='wrapper my-8 flex flex-col gap-8 md:gap-12'>
+                <h2 className='h2-bold'>
+                    Related Programs
+                </h2>
+                <Collection
+                    data={relatedPrograms?.data}
+                    emptyTitle ="No Programs Found"
+                    emptyStateSubtext="Come Back Later"
+                    collectionType="All_Programs"
+                    limit={3}
+                    page={searchParams.page as string}
+                    totalPages={relatedPrograms?.totalPages}  
+                />
+      </section>
+      </>
   )
 }
 

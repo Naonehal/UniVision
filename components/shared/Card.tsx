@@ -1,9 +1,12 @@
+
 import { IProgram } from '@/lib/database/models/program.model'
 import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
+
+
 
 type CardProps = {
     program: IProgram
@@ -25,20 +28,21 @@ const Card = ({ program }: CardProps) => {
                   </Link> 
                   <DeleteConfirmation programId={program._id} />
               </div>
-          ) }
+          )}
+
           <Link href={`/programs/${program._id}`} className='flex min-h-[230px] flex-col gap-3 p-5 md:gap-4'>
               <div className='flex gap-2'>
-                  <p className='p-semibold-14 w-max rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1'>
+                  <p className='p-semibold-14 w-max rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 truncate'>
                       {program.university.name}
                   </p>
-                  <span className='p-semibold-14 w-max rounded-full bg-green-100 px-4 py-1 text-green-60 line-clamp-1'>
+                  <span className='p-semibold-14 w-max rounded-full bg-green-100 px-4 py-1 text-green-60 truncate'>
                       {program.duration}
                   </span>
               </div>
               <p className='p-medium-16 p-medium-18 text-grey-500 '>
                   {program.deliveryMode}
               </p>
-              <p className='p-semibold-18 md:p-semibold-20 flex-1 text-black '>
+              <p className='p-semibold-18 md:p-semibold-20 flex-1 text-black truncate'>
                   {program.programName}
               </p>
               <p className='p-medium-16 md:p-medium-18  text-black truncate'>

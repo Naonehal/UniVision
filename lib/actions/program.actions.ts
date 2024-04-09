@@ -1,6 +1,6 @@
 "use server"
 
-import { CreateProgramParams, DeleteProgramParams, UpdateProgramParams } from "@/types";
+import { CreateProgramParams, DeleteProgramParams, GetAllProgramsParams, GetProgramsByUniversityParams, UpdateProgramParams } from "@/types";
 import { handleError } from "../utils";
 import { connectToDatabase } from "../database";
 import Program from "../database/models/program.model";
@@ -8,6 +8,10 @@ import University from "../database/models/university.model";
 import User from "../database/models/user.model";
 // import { useRouter } from "next/navigation";
 
+
+const getUniversityByName = async (name: string) => {
+  return University.findOne({ name: { $regex: name, $options: 'i' } })
+}
 
 const populateProgram = async (query:any) => {
     return query
@@ -62,15 +66,23 @@ export const deleteProgram = async ({programId}: DeleteProgramParams) => {
     }
 }
 
-export const getAllPrograms = async ({ limit = 8 }) => {
+export const getAllPrograms = async ({ university, page, query, limit = 8 }: GetAllProgramsParams) => {
     try {
-        await connectToDatabase();
-
-        const conditions = {};
-        
-        const programsQuery = Program.find(conditions).skip(0).limit(limit);
-
-        const programs = await populateProgram(programsQuery)
+      await connectToDatabase();
+      
+      const programCondition = query ? { programName: { $regex: query, $options: 'i' } } : {}
+      const universityCondition = university ? await getUniversityByName(university) : null
+      const conditions = {
+        $and: [programCondition, universityCondition ? {
+            university: universityCondition._id
+          } : {}]
+        };
+      const skipAmount = (Number(page) - 1) * limit
+      const programsQuery =  Program.find(conditions).skip(skipAmount).limit(limit);
+      
+      
+      const programs = await populateProgram(programsQuery)
+      
         const programsCount = await Program.countDocuments(conditions);
 
         return {
@@ -100,6 +112,35 @@ export async function updateProgram({ userId, program}: UpdateProgramParams) {
     // const router = useRouter();
     // router.refresh();
 
+  } catch (error) {
+    handleError(error)
+  }
+}
+
+export async function getRelatedProgramsByUniversity({
+  programName,
+  programId,
+  limit = 3,
+  page = 1,
+}: GetProgramsByUniversityParams) {
+  try {
+    await connectToDatabase()
+
+    const skipAmount = (Number(page) - 1) * limit
+    const conditions = { $and: [{ programName: programName }, { _id: { $ne: programId } }] }
+
+    const programsQuery = Program.find(conditions)
+      .sort({ createdAt: 'desc' })
+      .skip(skipAmount)
+      .limit(limit)
+    
+    // console.log(programsQuery)
+    const programs = await populateProgram(programsQuery)
+    // console.log(programs)
+
+    const programsCount = await Program.countDocuments(conditions)
+console.log(programsCount)
+    return { data: JSON.parse(JSON.stringify(programs)), totalPages: Math.ceil(programsCount / limit) }
   } catch (error) {
     handleError(error)
   }

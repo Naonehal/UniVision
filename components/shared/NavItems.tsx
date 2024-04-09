@@ -8,6 +8,8 @@ import { useUser } from "@clerk/nextjs";
 
 const adminEmail = "nao.work07@gmail.com"; // This should NOT be exposed client-side
 
+
+
 const NavItems = () => {
   const { isSignedIn, user } = useUser();
   const pathname = usePathname();

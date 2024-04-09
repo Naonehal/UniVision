@@ -1,13 +1,22 @@
 
 import Collection from "@/components/shared/Collection";
+import Search from "@/components/shared/Search";
+import UniversityFilter from "@/components/shared/UniversityFilter";
 import { Button } from "@/components/ui/button";
 import { getAllPrograms } from "@/lib/actions/program.actions";
+import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Home({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const university = (searchParams?.university as string) || "";
   
   const programs = await getAllPrograms({
+    query: searchText,
+    university,
+    page,
     limit: 6
   });
 
@@ -39,9 +48,9 @@ export default async function Home() {
 
       <section id="programs" className="wrapper my-8 felx flex-col gap-8 md:gap-12">
         <h2 className="h2-bold">Streamline Your Search <br /> with Our User-Friendly Interface</h2>
-        <div className="flex w-full flex-col gap-5 md:flex-row">
-          search
-          location
+        <div className="flex w-full flex-col gap-5 md:flex-row py-8">
+          <Search />
+          <UniversityFilter />
         </div>
         <Collection
           data={programs?.data}
@@ -49,8 +58,8 @@ export default async function Home() {
           emptyStateSubtext="Come Back Later"
           collectionType="All_Programs"
           limit={8}
-          page={1}
-        totalPages={2}  
+          page={page}
+        totalPages={programs?.totalPages}  
         />
       </section>
     </>

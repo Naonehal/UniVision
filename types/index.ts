@@ -61,19 +61,26 @@ export type DeleteProgramParams = {
 };
 
 export type GetAllProgramsParams = {
-    query?: string; // Optional search query that might be used to filter programs by name, faculty, etc.
-    universityId?: string; // Optional filter to get programs from a specific university
-    faculty?: string; // Optional filter to get programs from a specific faculty
-    degreeType?: string; // Optional filter to categorize by degree type (e.g., Bachelor's, Master's)
-    limit?: number; // Optional limit on the number of programs to fetch
-    page?: number; // Optional page number for pagination
+    query: string; 
+    university: string; 
+    faculty?: string; 
+    degreeType?: string; 
+    limit: number; 
+    page: number; 
 };
 
 
 export type GetProgramsByUniversityParams = {
-    universityId: string;
+  programName: string;
+  programId: string;
     limit?: number;
-    page: number;
+    page: number | string;
+};
+
+export type getSavedProgramsForUserParams = {
+  programIds: string[];
+    limit?: number;
+    page: number | string;
 };
 
 export type GetProgramsByFacultyParams = {
@@ -99,6 +106,13 @@ export type Program = {
   imageUrl: string;
 };
 
+export type GetProgramsByUserParams = {
+  
+  userId: string | null
+  limit?: number
+  page: string | number | null
+}
+
 
 // ====== University PARAMS
 export type CreateUniversityParams = {
@@ -120,4 +134,5 @@ export type RemoveUrlQueryParams = {
 export type SearchParamProps = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
+  page: string | number | null
 }
