@@ -1,3 +1,4 @@
+"use server"
 
 import Collection from "@/components/shared/Collection";
 import Search from "@/components/shared/Search";
@@ -65,4 +66,3 @@ export default async function Home({ searchParams }: SearchParamProps) {
     </>
   );
 }
-
