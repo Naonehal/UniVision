@@ -1,5 +1,3 @@
-"use server"
-
 import Collection from "@/components/shared/Collection";
 import Search from "@/components/shared/Search";
 import UniversityFilter from "@/components/shared/UniversityFilter";
