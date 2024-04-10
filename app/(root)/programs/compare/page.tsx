@@ -40,11 +40,18 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
     }, [page]);
 
     const addToComparison = (program: IProgram) => {
-        setSelectedPrograms(prevPrograms => [...prevPrograms, program]);
+    setSelectedPrograms(prevPrograms => {
+      // Check if the program is already in the list or if 3 programs have been added
+      const isExisting = prevPrograms.find(p => p._id === program._id);
+      const canAddMore = prevPrograms.length < 3;
+      if (!isExisting && canAddMore) {
+        return [...prevPrograms, program];
+      } else {
+        return prevPrograms; // Return the previous list without changes
+      }
+    });
   };
   
-  console.log(selectedPrograms);
-
     return (
       <>
         <section className='bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10'>
