@@ -5,32 +5,23 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
+import { Button } from '../ui/button'
 
 
 
 type CardProps = {
     program: IProgram
+    addToComparison: (program: IProgram) => void;
 }
 
-const Card = ({ program }: CardProps) => {
-    const { sessionClaims } = auth();
-    const userId = sessionClaims?.userId as string;
-
-    const isAdmin = userId === program.admin.toString();
+const CompareCard = ({ program, addToComparison }: CardProps) => {
+    
 
   return (
       <div className='group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]'>
           <Link href={`/programs/${program._id}`} style={{ backgroundImage: `url(${program.imageUrl})` }} className='flex-center flex-grow bg-grey-50 bg-cover bg-center text-grey-500'>  </Link>
-          {isAdmin && (
-              <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all'>
-                  <Link href={`/programs/${program._id}/update`}>
-                      <Image src="/assets/icons/edit.svg" alt="edit" width={20}  height={20} />
-                  </Link> 
-                  <DeleteConfirmation programId={program._id} />
-              </div>
-          )}
 
-          <Link href={`/programs/${program._id}`} className='flex min-h-[230px] flex-col gap-3 p-5 md:gap-4'>
+          <div className='flex min-h-[230px] flex-col gap-3 p-5 md:gap-4'>
               <div className='flex gap-2 justify-between'>
                   <p className='p-semibold-14 w-max rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 truncate'>
                       {program.university.name}
@@ -39,8 +30,9 @@ const Card = ({ program }: CardProps) => {
                       {program.duration}
                   </span>
               </div>
-              <p className='p-medium-16 p-medium-18 text-grey-500 '>
+              <p className='p-medium-16 p-medium-18 text-grey-500 flex items-center justify-between'>
                   {program.deliveryMode}
+                  <Button className='button rounded-full' onClick={() => addToComparison(program)}>Compare</Button>
               </p>
               <p className='p-semibold-18 md:p-semibold-20 flex-1 text-black truncate'>
                   {program.programName}
@@ -54,9 +46,9 @@ const Card = ({ program }: CardProps) => {
                         {program.tuitionFeesDomestic}
                     </span>
                 </p>
-          </Link>
+          </div>
       </div>
   )
 }
 
-export default Card
+export default CompareCard

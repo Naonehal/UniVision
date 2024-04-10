@@ -16,7 +16,7 @@ const ProfilePage = async ( { params: { id },searchParams }: SearchParamProps) =
   const result = await getSavedProgramsForUser({
   programIds: programIds, // Pass the array of programIds to getSavedProgramsForUser
   page: parseInt(searchParams.page as string, 10), // Make sure to parse the page number to an integer
-  limit: 8 // Or any other limit you wish to apply
+  limit: 6 // Or any other limit you wish to apply
 });
   // console.log(result)
 

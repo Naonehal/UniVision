@@ -13,7 +13,6 @@ const ProgramDetails = async ({ params: { id }, searchParams }: SearchParamProps
         programId: program._id,
         page: searchParams.page as string,
     })
-    // console.log(relatedPrograms)
     return (
       <>
       <section className='flex justify-center bg-primary-50 bg-dotted-pattern bg-contain'>
