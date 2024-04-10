@@ -17,6 +17,9 @@ export default authMiddleware({
         // 'api/uploadthing',
         '/assets/images/logo.svg',
         '/assets/icons/edit.svg',
+        '/assets/icons/calendar.svg',
+        '/assets/icons/location.svg',
+        '/assets/icons/search.svg',
         '/favicon.ico',
         '/assets/images/hero.png',
         '/pages/api/checkAdmin'
