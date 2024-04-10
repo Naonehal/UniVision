@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { useUser } from "@clerk/nextjs";
 
-const adminEmail = "nao.work07@gmail.com"; // This should NOT be exposed client-side
+const adminEmail = "Sanilpaul05@gmail.com"; 
 
 
 
