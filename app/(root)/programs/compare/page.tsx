@@ -1,7 +1,7 @@
 'use client'
 
 import CompareCollection from "@/components/shared/CompareCollection";
-import { getAllPrograms } from "@/lib/actions/program.actions";
+import { getAllProgram } from "@/lib/actions/program.actions";
 import { IProgram } from "@/lib/database/models/program.model";
 import React, { useEffect, useState } from "react";
 import {
@@ -32,13 +32,13 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
 
   useEffect(() => {
     const fetchPrograms = async () => {
-      const response = await getAllPrograms({
+      const response = await getAllProgram({
         query: '', 
         university: '', 
         page: page2,
         limit: limit,
       });
-
+      console.log(response);
       setPrograms(response?.data); // Assuming response.data contains the programs
       setTotalProgramsCount(response?.totalPages ?? 0 * limit); // Update the totalProgramsCount
     };
@@ -47,17 +47,22 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
   }, [page2]);
 
     const addToComparison = (program: IProgram) => {
-    setSelectedPrograms(prevPrograms => {
-      // Check if the program is already in the list or if 3 programs have been added
-      const isExisting = prevPrograms.find(p => p._id === program._id);
-      const canAddMore = prevPrograms.length < 3;
-      if (!isExisting && canAddMore) {
-        return [...prevPrograms, program];
-      } else {
-        return prevPrograms; // Return the previous list without changes
-      }
-    });
-  };
+  setSelectedPrograms(prevPrograms => {
+    const isExisting = prevPrograms.find(p => p._id === program._id);
+    if (isExisting) {
+      // If the program is already in the list, show an alert
+      window.alert("Program already added to comparison.");
+      return prevPrograms; // Return the previous list without changes
+    } else if (prevPrograms.length < 3) {
+      // Add the program if there's space and it's not already added
+      return [...prevPrograms, program];
+    } else {
+      // Optional: Alert if the comparison list is full (assuming a max of 3)
+      window.alert("You can only compare up to 3 programs at a time.");
+      return prevPrograms;
+    }
+  });
+};
   
     return (
       <>
@@ -84,7 +89,7 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
                 emptyStateSubtext="Try adjusting your search criteria" // Provide some subtext for the empty state
                 limit={limit} 
                 page={page2} 
-                totalPages={Math.ceil(totalProgramsCount / limit)} // Calculate total pages based on fetched programs
+                totalPages={totalProgramsCount} // Calculate total pages based on fetched programs
             />
         </section>
 
@@ -93,7 +98,10 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
           <div className="wrapper overflow-x-auto">
             <h3 className='h3-bold text-center'>
             Comparison Table
-          </h3>
+            </h3>
+            <Button onClick={() => setSelectedPrograms([])} className='my-2'>
+              Empty Comparison Table
+            </Button>
               <Table>
                 <TableCaption className="p-medium-14 text-grey-500">Program Comparison</TableCaption>
                 <TableHeader>

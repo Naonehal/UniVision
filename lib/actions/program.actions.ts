@@ -94,6 +94,29 @@ export const getAllPrograms = async ({ university, page, query, limit = 8 }: Get
     }
 }
 
+export const getAllProgram = async ({ university, page, query, limit = 8 }: GetAllProgramsParams) => {
+    try {
+      await connectToDatabase();
+      
+     
+      const conditions = {};
+      const skipAmount = (Number(page) - 1) * limit
+      const programsQuery =  Program.find(conditions).skip(skipAmount).limit(limit);
+      
+      
+      const programs = await populateProgram(programsQuery)
+      
+        const programsCount = await Program.countDocuments(conditions);
+
+        return {
+            data: JSON.parse(JSON.stringify(programs)),
+            totalPages: Math.ceil(programsCount / limit),
+        }
+    } catch (error) {
+        handleError(error)
+    }
+}
+
 // UPDATE
 export async function updateProgram({ userId, program}: UpdateProgramParams) {
   try {
