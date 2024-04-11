@@ -3,7 +3,7 @@
 import CompareCollection from "@/components/shared/CompareCollection";
 import { getAllPrograms } from "@/lib/actions/program.actions";
 import { IProgram } from "@/lib/database/models/program.model";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -23,21 +23,28 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
     const [programs, setPrograms] = React.useState<IProgram[]>([]);
     const [page, setPage] = React.useState<number>(1);
   const limit = 6; // Set your desired limit for programs per page
-
+  const page2 = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const university = (searchParams?.university as string) || "";
     // Fetch programs from your API and set them to the `programs` state
-    React.useEffect(() => {
-        const fetchPrograms = async () => {
-            const allPrograms = await getAllPrograms({
-              query: '',
-              university: '',
-              page: parseInt(searchParams.page as string, 10),
-              limit: 6
-            });
-            setPrograms(allPrograms?.data); // Adjust according to the actual response structure
-        };
+  const [totalProgramsCount, setTotalProgramsCount] = useState(0); // Define the totalProgramsCount state
 
-        fetchPrograms();
-    }, [page]);
+
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      const response = await getAllPrograms({
+        query: '', 
+        university: '', 
+        page: page2,
+        limit: limit,
+      });
+
+      setPrograms(response?.data); // Assuming response.data contains the programs
+      setTotalProgramsCount(response?.totalPages * limit); // Update the totalProgramsCount
+    };
+
+    fetchPrograms();
+  }, [page2]);
 
     const addToComparison = (program: IProgram) => {
     setSelectedPrograms(prevPrograms => {
@@ -76,8 +83,8 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
                 emptyTitle="No Programs Found" // Provide a title for when no programs are found
                 emptyStateSubtext="Try adjusting your search criteria" // Provide some subtext for the empty state
                 limit={limit} 
-                page={page} 
-                totalPages={Math.ceil(programs.length / limit)} // Calculate total pages based on fetched programs
+                page={page2} 
+                totalPages={Math.ceil(totalProgramsCount / limit)} // Calculate total pages based on fetched programs
             />
         </section>
 

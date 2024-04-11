@@ -10,12 +10,16 @@ const ProfilePage = async ( { params: { id },searchParams }: SearchParamProps) =
   const { sessionClaims } = auth();
 
   const userId = sessionClaims?.userId as string;
+   const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const university = (searchParams?.university as string) || "";
+  
 
   const programIds = await getProgramIdsByUserId(userId);
 
   const result = await getSavedProgramsForUser({
   programIds: programIds, // Pass the array of programIds to getSavedProgramsForUser
-  page: parseInt(searchParams.page as string, 10), // Make sure to parse the page number to an integer
+  page: page, // Make sure to parse the page number to an integer
   limit: 6 // Or any other limit you wish to apply
 });
   // console.log(result)
@@ -37,15 +41,18 @@ const ProfilePage = async ( { params: { id },searchParams }: SearchParamProps) =
           </Button>
         </div>
       </section>
+      <section id="programs" className="wrapper my-8 felx flex-col gap-8 md:gap-12">
       <Collection
           data={result?.data}
           emptyTitle ="No program saved yet."
           emptyStateSubtext="no worries - Explore more programs!"
           collectionType="Saved_Programs"
           limit={3}
-          page={searchParams.page as string}
-        totalPages={result?.totalPages}  
+          page={page}
+          totalPages={result?.totalPages}  
+          
         />
+        </section>
     </>
   )
 }
