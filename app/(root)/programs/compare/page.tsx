@@ -40,7 +40,7 @@ const CompareProgram = ({ params: { id },searchParams }: SearchParamProps) => {
       });
 
       setPrograms(response?.data); // Assuming response.data contains the programs
-      setTotalProgramsCount(response?.totalPages * limit); // Update the totalProgramsCount
+      setTotalProgramsCount(response?.totalPages ?? 0 * limit); // Update the totalProgramsCount
     };
 
     fetchPrograms();
