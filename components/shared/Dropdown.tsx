@@ -20,7 +20,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog" // Importing components from alert-dialog UI component
 import { Input } from "../ui/input" // Importing Input component
-import { createUniversity, getAllUniversities } from "@/lib/actions/university.actions" // Importing actions for university
+import { createUniversity, getAllUniversities } from "@/lib/actions/university,actions" // Importing actions for university
 
 // Define props type for Dropdown component
 type DropdownProps = {
