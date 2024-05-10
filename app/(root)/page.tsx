@@ -20,6 +20,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
     limit: 6
   });
 
+  // commit
 
   return (
     <>
