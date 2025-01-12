@@ -81,6 +81,7 @@ To start the development server, use the following command:
 npm run dev
 # or
 yarn dev
+```
 
 Visit http://localhost:3000 in your browser to view the application.
 
