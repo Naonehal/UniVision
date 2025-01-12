@@ -47,7 +47,7 @@ Before you begin, make sure you have the following installed:
 1.  **Clone the repository:**
 
     ```bash
-    git clone [your-repository-url]
+    git clone (https://github.com/Naonehal/UniVision.git)
     cd UniVision
     ```
 
@@ -81,3 +81,11 @@ To start the development server, use the following command:
 npm run dev
 # or
 yarn dev
+
+Visit http://localhost:3000 in your browser to view the application.
+
+License
+This project is licensed under the MIT License.
+
+
+That should provide a comprehensive overview of the project. Let me know if you would like any modifications or further improvements! I'm here to help. 😊
